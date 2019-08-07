@@ -1,4 +1,5 @@
 const webpackConfig = require('./webpack.config')
+const webpack = require('webpack')
 const merge = require('webpack-merge')
 const portfinder = require('portfinder');
 const path = require('path')
@@ -35,8 +36,15 @@ module.exports = portfinder.getPortPromise().then((port) => {
             port: port,
             open: true,
             hot: true,
-            contentBase: path.resolve(__dirname, '../dist')
+            contentBase: path.resolve(__dirname, '../public')
 
-        }
+        },
+
+        plugins: [
+            new webpack.DefinePlugin({
+                'process.env.baseURL': JSON.stringify('.')
+            })
+        ]
+
     })
 })

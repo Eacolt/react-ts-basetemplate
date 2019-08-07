@@ -3,12 +3,45 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <style type="text/css">
+        html,
+        body {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+        }
+    </style>
 </head>
 
 <body>
     <div id="root"></div>
+
+    <script type="text/javascript">
+        window.baseSize = 0;
+
+        function resizing() {
+            var screenW = document.body.clientWidth;
+            var screenH = document.body.clientHeight;
+            if (screenW / screenH > 1920 / 1080) {
+                document.documentElement.style.fontSize = screenH / 1080 * 100 + 'px';
+
+                window.baseSize = screenH / 1080 * 100;
+            } else {
+                document.documentElement.style.fontSize = screenW / 1920 * 100 + 'px';
+                window.baseSize = screenW / 1920 * 100;
+            }
+            console.log('resizing', screenW, screenH)
+        }
+
+        function preload() {
+            resizing();
+            window.addEventListener('resize', resizing)
+        }
+        window.addEventListener('DOMContentLoaded', preload)
+    </script>
 
 </body>
 
